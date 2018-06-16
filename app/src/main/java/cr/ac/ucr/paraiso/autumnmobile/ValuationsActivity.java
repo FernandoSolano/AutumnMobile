@@ -5,14 +5,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.GridView;
 
-public class MainActivity extends AppCompatActivity {
+public class ValuationsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_valuations);
+        setTitle("Valoraciones");
+        //si no existen valoraciones, se debe desplegar un mensaje
+        //GridView grid = (GridView) findViewById(R.id.grid_valutions_dynamic);
+        //grid.setAdapter();
     }
 
     @Override
@@ -25,29 +29,20 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();
         Intent intent;
-        if(id==R.id.itemValuations){
-            intent = new Intent(getApplicationContext(), ValuationsActivity.class);
-        }else if(id==R.id.itemReports){
+        if(id==R.id.itemReports){
             intent = new Intent(getApplicationContext(), ReportsActivity.class);
-        }else{
+            startActivity(intent);
+        }else if(id==R.id.itemStats){
             intent = new Intent(getApplicationContext(), StatsActivity.class);
+            startActivity(intent);
         }
-        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 
-    public void onCLickValuations(View v){
-        Intent intent = new Intent(MainActivity.this, ValuationsActivity.class);
-        startActivity(intent);
-    }
-
-    public void onCLickStats(View v){
-        Intent intent = new Intent(MainActivity.this, StatsActivity.class);
-        startActivity(intent);
-    }
-
-    public void onCLickReports(View v){
-        Intent intent = new Intent(MainActivity.this, ReportsActivity.class);
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 }
