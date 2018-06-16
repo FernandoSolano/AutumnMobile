@@ -14,9 +14,10 @@ public class ValuationsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_valuations);
         setTitle("Valoraciones");
-        //si no existen valoraciones, se debe desplegar un mensaje
-        //GridView grid = (GridView) findViewById(R.id.grid_valutions_dynamic);
-        //grid.setAdapter();
+        if(!fillTable()){
+            //There are no valuations
+            //display empty message
+        }
     }
 
     @Override
@@ -44,5 +45,10 @@ public class ValuationsActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+
+    //This method tries to fill the table, it returns true or false if it finds existing valuations
+    private boolean fillTable(){
+        return false;
     }
 }
