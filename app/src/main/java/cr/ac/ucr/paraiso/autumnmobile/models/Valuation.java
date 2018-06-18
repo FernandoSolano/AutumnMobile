@@ -1,12 +1,12 @@
 package cr.ac.ucr.paraiso.autumnmobile.models;
 
-import java.text.DateFormat;
+import java.util.Date;
 
 public class Valuation {
     private int id;
     private String cognitiveImpairment, depressiveDisorder, emotionalDisorderType, mentalDisorderType, familySituation, economicSituation;
     private boolean hasEmotionalDisorder, hasMentalDisorder, currentlyReceivingAttention, discharged;
-    private DateFormat lastAttentionDate, createdAt, updatedAt;
+    private Date lastAttentionDate, createdAt, updatedAt;
 
     public Valuation() {
     }
@@ -99,27 +99,32 @@ public class Valuation {
         this.discharged = discharged;
     }
 
-    public DateFormat getLastAttentionDate() {
+    public Date getLastAttentionDate() {
         return lastAttentionDate;
     }
 
-    public void setLastAttentionDate(DateFormat lastAttentionDate) {
+    public void setLastAttentionDate(Date lastAttentionDate) {
         this.lastAttentionDate = lastAttentionDate;
     }
 
-    public DateFormat getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(DateFormat createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
-    public DateFormat getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(DateFormat updatedAt) {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return this.getId()+" "+this.getUpdatedAt();
     }
 }
