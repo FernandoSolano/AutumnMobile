@@ -1,12 +1,19 @@
 package cr.ac.ucr.paraiso.autumnmobile.models;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+import cr.ac.ucr.paraiso.autumnmobile.common.CalendarUtils;
 
 public class Valuation {
     private int id;
     private String cognitiveImpairment, depressiveDisorder, emotionalDisorderType, mentalDisorderType, familySituation, economicSituation;
     private boolean hasEmotionalDisorder, hasMentalDisorder, currentlyReceivingAttention, discharged;
     private Date lastAttentionDate, createdAt, updatedAt;
+    private User user;
+    private UserPerson userPerson;
+    private List<Observation> observations;
 
     public Valuation() {
     }
@@ -123,8 +130,32 @@ public class Valuation {
         this.updatedAt = updatedAt;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public UserPerson getUserPerson() {
+        return userPerson;
+    }
+
+    public void setUserPerson(UserPerson userPerson) {
+        this.userPerson = userPerson;
+    }
+
+    public List<Observation> getObservations() {
+        return observations;
+    }
+
+    public void setObservations(List<Observation> observations) {
+        this.observations = observations;
+    }
+
     @Override
     public String toString() {
-        return this.getId()+" "+this.getUpdatedAt();
+        return CalendarUtils.toStringFormat(this.getUpdatedAt()) + " - " + this.getUserPerson().getFirstName() + " " + this.getUserPerson().getLastName1() + " " + this.getUserPerson().getLastName2();
     }
 }

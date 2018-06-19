@@ -1,4 +1,4 @@
-package cr.ac.ucr.paraiso.autumnmobile;
+package cr.ac.ucr.paraiso.autumnmobile.data;
 
 import android.app.Application;
 
