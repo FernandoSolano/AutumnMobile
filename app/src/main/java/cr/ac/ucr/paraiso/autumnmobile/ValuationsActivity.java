@@ -88,6 +88,8 @@ public class ValuationsActivity extends AppCompatActivity {
                             //display empty message
                         } catch (JSONException e) {
                             Toast.makeText(ValuationsActivity.this, "Unable to parse data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
                         }
                     }
                 },
@@ -95,6 +97,8 @@ public class ValuationsActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         Toast.makeText(ValuationsActivity.this, "Unable to fetch data: " + volleyError.getMessage(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
                     }
                 });
         VolleyApplication.getInstance().getRequestQueue().add(request);
