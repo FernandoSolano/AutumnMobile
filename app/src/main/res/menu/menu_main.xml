@@ -6,9 +6,6 @@
         android:id="@+id/itemValuations"
         android:title="Valoraciones" />
     <item
-        android:id="@+id/itemReports"
-        android:title="Reportes" />
-    <item
         android:id="@+id/itemStats"
         android:title="Estadísticas" />
 </menu>

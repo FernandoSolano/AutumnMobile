@@ -1,6 +1,8 @@
 package cr.ac.ucr.paraiso.autumnmobile.models;
 
-public class Observation {
+import java.io.Serializable;
+
+public class Observation implements Serializable{
     private int id;
     private String content;
 

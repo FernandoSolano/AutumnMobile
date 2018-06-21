@@ -5,7 +5,7 @@ import android.app.Application;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
-public class VolleyApplication extends Application{
+public class VolleyApplication extends Application {
     private static VolleyApplication sInstance;
 
     private RequestQueue mRequestQueue;

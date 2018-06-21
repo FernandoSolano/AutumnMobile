@@ -24,31 +24,24 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id=item.getItemId();
+        int id = item.getItemId();
         Intent intent;
-        if(id==R.id.itemValuations){
+        if (id == R.id.itemValuations) {
             intent = new Intent(getApplicationContext(), ValuationsActivity.class);
-        }else if(id==R.id.itemReports){
-            intent = new Intent(getApplicationContext(), ReportsActivity.class);
-        }else{
+        } else {
             intent = new Intent(getApplicationContext(), StatsActivity.class);
         }
         startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 
-    public void onCLickValuations(View v){
+    public void onClickValuations(View v) {
         Intent intent = new Intent(MainActivity.this, ValuationsActivity.class);
         startActivity(intent);
     }
 
-    public void onCLickStats(View v){
+    public void onClickStats(View v) {
         Intent intent = new Intent(MainActivity.this, StatsActivity.class);
-        startActivity(intent);
-    }
-
-    public void onCLickReports(View v){
-        Intent intent = new Intent(MainActivity.this, ReportsActivity.class);
         startActivity(intent);
     }
 }

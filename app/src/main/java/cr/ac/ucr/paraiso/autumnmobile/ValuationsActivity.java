@@ -20,11 +20,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import cr.ac.ucr.paraiso.autumnmobile.common.CalendarUtils;
+import cr.ac.ucr.paraiso.autumnmobile.data.ValuationData;
 import cr.ac.ucr.paraiso.autumnmobile.data.VolleyApplication;
 import cr.ac.ucr.paraiso.autumnmobile.models.User;
 import cr.ac.ucr.paraiso.autumnmobile.models.UserPerson;
@@ -50,10 +52,7 @@ public class ValuationsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         Intent intent;
-        if (id == R.id.itemReports) {
-            intent = new Intent(getApplicationContext(), ReportsActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.itemStats) {
+        if (id == R.id.itemStats) {
             intent = new Intent(getApplicationContext(), StatsActivity.class);
             startActivity(intent);
         }
@@ -67,7 +66,51 @@ public class ValuationsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //This method tries to fill the table, it returns true or false if it finds existing valuations
+    private void fetch() {
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.GET,
+                "https://autumnascate.herokuapp.com/api/psychology",
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        // Parse the JSON
+                        try {
+                            ValuationData valuationData = new ValuationData();
+                            List<Valuation> valuations = valuationData.getAll(jsonObject);
+                            ArrayAdapter<Valuation> adapter = new ArrayAdapter<Valuation>(ValuationsActivity.this, android.R.layout.simple_list_item_1, valuations);
+                            ListView listView = (ListView) findViewById(R.id.listView);
+                            listView.setAdapter(adapter);
+                            ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+                            progressBar.setVisibility(View.GONE);
+                            //If there are no valuations
+                            //display empty message
+                        } catch (JSONException e) {
+                            Toast.makeText(ValuationsActivity.this, "Unable to parse data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        } catch (ParseException e) {
+                            Toast.makeText(ValuationsActivity.this, "Unable to parse dates: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Toast.makeText(ValuationsActivity.this, "Unable to fetch data: " + volleyError.getMessage(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+                });
+        VolleyApplication.getInstance().getRequestQueue().add(request);
+    }
+
+    /*
     private void fetch() {
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
@@ -89,6 +132,7 @@ public class ValuationsActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             Toast.makeText(ValuationsActivity.this, "Unable to parse data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                         }
                     }
@@ -98,6 +142,7 @@ public class ValuationsActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError volleyError) {
                         Toast.makeText(ValuationsActivity.this, "Unable to fetch data: " + volleyError.getMessage(), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     }
                 });
@@ -134,11 +179,11 @@ public class ValuationsActivity extends AppCompatActivity {
             JSONObject jsonUserPerson = jsonObject.getJSONObject("user_person");
             int userPersonId = jsonUserPerson.getInt("id");
             String firstName = jsonUserPerson.getString("nombre");
-            String lastName1= jsonUserPerson.getString("primer_apellido");
-            String lastName2= jsonUserPerson.getString("segundo_apellido");
-            String ind= jsonUserPerson.getString("cedula");
-            String birthday= jsonUserPerson.getString("fecha_nacimiento");
-            String gender= jsonUserPerson.getString("genero");
+            String lastName1 = jsonUserPerson.getString("primer_apellido");
+            String lastName2 = jsonUserPerson.getString("segundo_apellido");
+            String ind = jsonUserPerson.getString("cedula");
+            String birthday = jsonUserPerson.getString("fecha_nacimiento");
+            String gender = jsonUserPerson.getString("genero");
             //ToDo... Retrieve list of observations
 
             //Objects creation
@@ -176,5 +221,5 @@ public class ValuationsActivity extends AppCompatActivity {
             //Toast.makeText(ValuationsActivity.this, "valuation id: " + valuation.getId(), Toast.LENGTH_SHORT).show();
         }
         return valuations;
-    }
+    }*/
 }

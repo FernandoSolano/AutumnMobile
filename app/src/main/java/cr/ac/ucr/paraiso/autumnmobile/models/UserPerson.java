@@ -1,6 +1,8 @@
 package cr.ac.ucr.paraiso.autumnmobile.models;
 
-public class UserPerson {
+import java.io.Serializable;
+
+public class UserPerson implements Serializable{
     private int id;
     private String firstName, lastName1, lastName2, ind, birthday, gender;
 
