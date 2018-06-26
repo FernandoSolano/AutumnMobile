@@ -25,7 +25,6 @@
         <activity android:name=".StatsDepressiveDisorderActivity" />
         <activity android:name=".StatsEmotionalDisorderActivity" />
         <activity android:name=".StatsMentalDisorderActivity" />
-        <activity android:name=".StatsGeneralActivity"></activity>
     </application>
 
 </manifest>

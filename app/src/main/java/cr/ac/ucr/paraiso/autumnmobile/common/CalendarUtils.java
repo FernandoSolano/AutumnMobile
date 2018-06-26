@@ -12,24 +12,17 @@ import cr.ac.ucr.paraiso.autumnmobile.ValuationsActivity;
 
 public class CalendarUtils {
 
+    public static Calendar toCalendar(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal;
+    }
+
     public static Date toDateFormat(String stringDate) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = format.parse(stringDate);
         return date;
     }
-
-    /*
-    public static Date toDateFormat(String stringDate, Activity activity){
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try {
-            Date date = format.parse(stringDate);
-            return date;
-        } catch (ParseException e) {
-            Toast.makeText(activity, "Unable to format date: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-        return null;
-    }
-    */
 
     public static String toStringFormat(Date date) {
         Calendar calendar = Calendar.getInstance();

@@ -51,11 +51,5 @@
             android:onClick="onClickMentalDisorder"
             android:text="Trastorno mental" />
 
-        <Button
-            android:id="@+id/button_general_stats"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onClickGeneralStats"
-            android:text="Padecimientos en general" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

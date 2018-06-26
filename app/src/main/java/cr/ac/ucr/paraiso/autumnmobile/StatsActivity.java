@@ -1,15 +1,12 @@
 package cr.ac.ucr.paraiso.autumnmobile;
 
-import android.app.Application;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -74,21 +71,19 @@ public class StatsActivity extends AppCompatActivity {
 
     public void onClickDepressiveDisorder(View v) {
         Intent intent = new Intent(this, StatsDepressiveDisorderActivity.class);
+        intent.putExtra("valuations", (Serializable) valuations);
         startActivity(intent);
     }
 
     public void onClickEmotionalDisorder(View v) {
         Intent intent = new Intent(this, StatsEmotionalDisorderActivity.class);
+        intent.putExtra("valuations", (Serializable) valuations);
         startActivity(intent);
     }
 
     public void onClickMentalDisorder(View v) {
         Intent intent = new Intent(this, StatsMentalDisorderActivity.class);
-        startActivity(intent);
-    }
-
-    public void onClickGeneralStats(View v) {
-        Intent intent = new Intent(this, StatsGeneralActivity.class);
+        intent.putExtra("valuations", (Serializable) valuations);
         startActivity(intent);
     }
 
