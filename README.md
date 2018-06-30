@@ -3,4 +3,4 @@ Android project developed for the psychology department of ASCATE. It displays a
 
 <h2>Key features:</h2>
   - Consumes a Laravel REST service using Volley.<br>
-  - Displays information on graphics.<br>
+  - Displays information on graphics using MPAndroidChart library.<br>
