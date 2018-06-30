@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -20,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,12 +35,24 @@ import cr.ac.ucr.paraiso.autumnmobile.models.UserPerson;
 import cr.ac.ucr.paraiso.autumnmobile.models.Valuation;
 
 public class ValuationsActivity extends AppCompatActivity {
+    List<Valuation> valuations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_valuations);
         setTitle("Valoraciones");
+        ListView listView = (ListView) findViewById(R.id.listView);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+                Valuation valuation = (Valuation) parent.getItemAtPosition(position);
+                Toast.makeText(getApplicationContext(), valuation.getId()+" "+valuation.getUser().getName(), Toast.LENGTH_SHORT).show();
+                //ToDo... Serialize entry an send it on a new intent
+                Intent intent = new Intent(getApplicationContext(), ValuationDetailActivity.class);
+                intent.putExtra("valuation", valuation);
+                startActivity(intent);
+            }
+        });
         fetch();
     }
 
@@ -77,7 +91,7 @@ public class ValuationsActivity extends AppCompatActivity {
                         // Parse the JSON
                         try {
                             ValuationData valuationData = new ValuationData();
-                            List<Valuation> valuations = valuationData.getAll(jsonObject);
+                            valuations = valuationData.getAll(jsonObject);
                             ArrayAdapter<Valuation> adapter = new ArrayAdapter<Valuation>(ValuationsActivity.this, android.R.layout.simple_list_item_1, valuations);
                             ListView listView = (ListView) findViewById(R.id.listView);
                             listView.setAdapter(adapter);
