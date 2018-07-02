@@ -3,6 +3,8 @@ package cr.ac.ucr.paraiso.autumnmobile;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import cr.ac.ucr.paraiso.autumnmobile.common.CalendarUtils;
@@ -15,6 +17,7 @@ public class ValuationDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_valuation_detail);
+        setTitle("Detalles");
 
         //Objects retrieval
         Intent i = getIntent();
@@ -57,5 +60,24 @@ public class ValuationDetailActivity extends AppCompatActivity {
         }else{
             textViewDis.setText("No");
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        Intent intent;
+        if (id == R.id.itemValuations) {
+            finish();
+        } else if (id == R.id.itemStats) {
+            intent = new Intent(getApplicationContext(), StatsActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
