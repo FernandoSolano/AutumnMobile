@@ -1,4 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Autumn Mobile</string>
+
+    <string-array name="array_yes_no">
+        <item>Sí</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="array_cognitive_impairment">
+        <item>No tiene</item>
+        <item>Alteración cognitiva leve</item>
+        <item>Alteración cognitiva moderada</item>
+        <item>Alteración cognitiva severa</item>
+        <item>Demencia leve</item>
+        <item>Demencia moderada</item>
+        <item>Demencia severa</item>
+    </string-array>
+
+    <string-array name="array_depressive_disorder">
+        <item>No tiene</item>
+        <item>Depresión leve</item>
+        <item>Depresión moderada</item>
+        <item>Depresión severa</item>
+    </string-array>
+
+    <string-array name="array_economic_situation">
+        <item>Pobreza Extrema</item>
+        <item>Pobreza</item>
+        <item>Fuera de riesgo</item>
+    </string-array>
 </resources>
