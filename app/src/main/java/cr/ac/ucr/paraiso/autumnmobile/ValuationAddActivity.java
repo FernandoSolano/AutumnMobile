@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,19 +22,20 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cr.ac.ucr.paraiso.autumnmobile.data.UserPeopleData;
-import cr.ac.ucr.paraiso.autumnmobile.data.ValuationData;
 import cr.ac.ucr.paraiso.autumnmobile.data.VolleyApplication;
 import cr.ac.ucr.paraiso.autumnmobile.models.UserPerson;
-import cr.ac.ucr.paraiso.autumnmobile.models.Valuation;
 
 public class ValuationAddActivity extends AppCompatActivity {
     List<UserPerson> userPeople;
@@ -80,7 +82,71 @@ public class ValuationAddActivity extends AppCompatActivity {
         finish();
     }
 
-    public void imageButtonObtenerFechaeOnClick(View v) {
+    public void buttonAddOnClick(View v) {
+        String url = "https://autumnascate.herokuapp.com/api/psychology/insert";
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        //Log.d("Response", response);
+                        Toast.makeText(getApplicationContext(), "Se ha registrado exitosamente la valoración...", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), ValuationsActivity.class);
+                        startActivity(intent);
+                        //finish();
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        // error
+                        Toast.makeText(getApplicationContext(), "Unable to post data: " + volleyError.getMessage(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Spinner spinnerUP = findViewById(R.id.spinnerUserPerson);
+                Spinner spinnerCI = findViewById(R.id.spinnerCognitiveImpairment);
+                Spinner spinnerDD = findViewById(R.id.spinnerDepressiveDisorder);
+                EditText editTextED = findViewById(R.id.editTextEmotionalDisorder);
+                EditText editTextMD = findViewById(R.id.editTextMentalDisorder);
+                EditText editTextFS = findViewById(R.id.editTextFamilySituation);
+                Spinner spinnerES = findViewById(R.id.spinnerEconomicSituation);
+                Spinner spinnerCRA = findViewById(R.id.spinnerCurrentlyReceivingAttention);
+                Spinner spinnerD = findViewById(R.id.spinnerDischarged);
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("ultima_sesion", year+"-"+(month + 1)+"-"+day);
+                params.put("user_person_id", ((UserPerson) spinnerUP.getSelectedItem()).getId()+"");
+                params.put("deterioro_cognitivo", spinnerCI.getSelectedItem().toString());
+                params.put("trastorno_depresivo", spinnerDD.getSelectedItem().toString());
+                params.put("tipo_trastorno_emocional", editTextED.getText().toString());
+                params.put("tipo_trastorno_mental", editTextMD.getText().toString());
+                params.put("situacion_familiar", editTextFS.getText().toString());
+                params.put("situacion_economica", spinnerES.getSelectedItem().toString());
+                if(spinnerCRA.getSelectedItem().toString().equals("Sí")){
+                    params.put("atendido", 1+"");
+                }else{
+                    params.put("atendido", 0+"");
+                }
+                if(spinnerD.getSelectedItem().toString().equals("Sí")){
+                    params.put("de_alta", 1+"");
+                }else{
+                    params.put("de_alta", 0+"");
+                }
+                return params;
+            }
+        };
+        VolleyApplication.getInstance().getRequestQueue().add(postRequest);
+    }
+
+    public void imageButtonDateOnClick(View v) {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
